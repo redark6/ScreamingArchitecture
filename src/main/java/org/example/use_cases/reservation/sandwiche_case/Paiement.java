@@ -2,31 +2,37 @@ package org.example.use_cases.reservation.sandwiche_case;
 
 public class Paiement {
 
-    private String id;
-    private String idReservation;
-    private boolean isValide;
+    private final Id id;
+    private AwaitingReservation reservation;
+    private boolean isValid;
     private int prix;
 
-    public Paiement(String id, String idReservation, boolean isValide, int prix) {
+    public Paiement(Id id, AwaitingReservation reservation, boolean isValid, int prix) {
         this.id = id;
-        this.idReservation = idReservation;
-        this.isValide = isValide;
+        this.reservation = reservation;
+        this.isValid = isValid;
         this.prix = prix;
     }
 
-    public String getId() {
+    public Id getId() {
         return id;
     }
 
-    public String getIdReservation() {
-        return idReservation;
+    public AwaitingReservation getReservation() {
+        return reservation;
     }
 
-    public boolean isValide() {
-        return isValide;
+    public boolean isValid() {
+        return isValid;
     }
 
     public int getPrix() {
         return prix;
+    }
+
+    void checkPaiement() throws PaiementNonValideException {
+        if (!isValid()) {
+            throw new PaiementNonValideException();
+        }
     }
 }

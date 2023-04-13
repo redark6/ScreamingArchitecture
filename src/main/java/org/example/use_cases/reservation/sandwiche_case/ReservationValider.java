@@ -2,16 +2,16 @@ package org.example.use_cases.reservation.sandwiche_case;
 
 public class ReservationValider {
 
-    private String utilisateurId;
-    private String oeuvreId;
+    private Id utilisateurId;
+    private Id oeuvreId;
     private String duree;
     private int prix;
 
-    public void setUtilisateurId(String utilisateurId) {
+    public void setUtilisateurId(Id utilisateurId) {
         this.utilisateurId = utilisateurId;
     }
 
-    public void setOeuvreId(String oeuvreId) {
+    public void setOeuvreId(Id oeuvreId) {
         this.oeuvreId = oeuvreId;
     }
 

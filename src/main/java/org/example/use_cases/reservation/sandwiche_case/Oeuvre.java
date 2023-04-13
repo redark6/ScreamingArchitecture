@@ -2,12 +2,14 @@ package org.example.use_cases.reservation.sandwiche_case;
 
 public class Oeuvre {
 
+    private final Id id;
     private String titre;
     private String auteur;
     private String editeur;
     private Boolean isDisponible;
 
-    public Oeuvre(String titre, String auteur, String editeur, Boolean isDisponible) {
+    public Oeuvre(Id id, String titre, String auteur, String editeur, Boolean isDisponible) {
+        this.id = id;
         this.titre = titre;
         this.auteur = auteur;
         this.editeur = editeur;
@@ -44,5 +46,11 @@ public class Oeuvre {
 
     public void setDisponible(Boolean disponible) {
         isDisponible = disponible;
+    }
+
+    void checkOeuvreDisponibilite() throws OeuvreNonDisponibleException {
+        if (!isDisponible()) {
+            throw new OeuvreNonDisponibleException();
+        }
     }
 }

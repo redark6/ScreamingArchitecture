@@ -1,6 +1,6 @@
 package org.example.use_cases.reservation.sandwiche_case;
 
 public interface OeuvreRepository {
-    Oeuvre getOeuvrParId(String oeuvreId);
-    void setOeuvreNonDisponible(String oeuvreId);
+    Oeuvre getOeuvrParId(Id oeuvreId);
+    void setOeuvreNonDisponible(Id oeuvreId);
 }

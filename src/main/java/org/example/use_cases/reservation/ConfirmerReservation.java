@@ -13,33 +13,18 @@ public class ConfirmerReservation {
         this.paiementRepository = paiementRepository;
         this.reservationValiderRepository = reservationValiderRepository;
     }
-    
+
     public ReservationValider confirmerReservation(AwaitingReservation reservation) throws OeuvreNonDisponibleException, PaiementNonValideException {
-        String oeuvreId = reservation.getOeuvreId();
-        String utilisateurId = reservation.getUtilisateurId();
+        Id oeuvreId = reservation.getOeuvreId();
+        Id utilisateurId = reservation.getUtilisateurId();
         Oeuvre oeuvre = oeuvreRepository.getOeuvrParId(oeuvreId);
         Paiement paiement = paiementRepository.getPaiement(utilisateurId, reservation.getId());
 
-        ReservationValider reservationValider = getReservationValider(reservation, oeuvreId, utilisateurId, oeuvre, paiement);
+        ReservationValider reservationValider = reservation.getReservationValider(oeuvreId, utilisateurId, oeuvre, paiement);
 
         reservationValiderRepository.save(reservationValider);
         oeuvreRepository.setOeuvreNonDisponible(oeuvreId);
         return reservationValider;
     }
 
-    private static ReservationValider getReservationValider(AwaitingReservation reservation, String oeuvreId, String utilisateurId, Oeuvre oeuvre, Paiement paiement) throws OeuvreNonDisponibleException, PaiementNonValideException {
-        if (!oeuvre.isDisponible()) {
-            throw new OeuvreNonDisponibleException();
-        }
-        if (!paiement.isValide()) {
-            throw new PaiementNonValideException();
-        }
-
-        ReservationValider reservationValider = new ReservationValider();
-        reservationValider.setUtilisateurId(utilisateurId);
-        reservationValider.setOeuvreId(oeuvreId);
-        reservationValider.setDuree(reservation.getDuree());
-        reservationValider.setPrix(paiement.getPrix());
-        return reservationValider;
-    }
 }
