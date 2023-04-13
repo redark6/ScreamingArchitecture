@@ -9,9 +9,9 @@ class ConfirmerReservationTest {
     @org.junit.jupiter.api.Test
     void confirmerReservation() throws OeuvreNonDisponibleException, PaiementNonValideException {
 // Given
-        OeuvreRepository oeuvreRepository = new OeuvreRepository();
-        PaiementRepository paiementRepository = new PaiementRepository();
-        ReservationValiderRepository reservationValiderRepository = new ReservationValiderRepository();
+        OeuvreRepository oeuvreRepository = new OeuvreRepositoryDisponible();
+        PaiementRepository paiementRepository = new PaiementRepositoryValid();
+        ReservationValiderRepository reservationValiderRepository = new ReservationValiderRepositoryFake();
 
 
         ConfirmerReservation confirmerReservation = new ConfirmerReservation(oeuvreRepository, paiementRepository, reservationValiderRepository);
@@ -24,9 +24,9 @@ class ConfirmerReservationTest {
     @org.junit.jupiter.api.Test
     void confirmerReservationOeuvreNonDisponible() throws OeuvreNonDisponibleException, PaiementNonValideException {
 // Given
-        OeuvreRepository oeuvreRepository = new OeuvreRepository();
-        PaiementRepository paiementRepository = new PaiementRepository();
-        ReservationValiderRepository reservationValiderRepository = new ReservationValiderRepository();
+        OeuvreRepository oeuvreRepository = new OeuvreRepositoryIndisponible();
+        PaiementRepository paiementRepository = new PaiementRepositoryValid();
+        ReservationValiderRepository reservationValiderRepository = new ReservationValiderRepositoryFake();
 
 
         ConfirmerReservation confirmerReservation = new ConfirmerReservation(oeuvreRepository, paiementRepository, reservationValiderRepository);
@@ -39,9 +39,9 @@ class ConfirmerReservationTest {
     @org.junit.jupiter.api.Test
     void confirmerReservationPaiementNonValide() throws OeuvreNonDisponibleException, PaiementNonValideException {
 // Given
-        OeuvreRepository oeuvreRepository = new OeuvreRepository();
-        PaiementRepository paiementRepository = new PaiementRepository();
-        ReservationValiderRepository reservationValiderRepository = new ReservationValiderRepository();
+        OeuvreRepository oeuvreRepository = new OeuvreRepositoryDisponible();
+        PaiementRepository paiementRepository = new PaiementRepositoryInvalid();
+        ReservationValiderRepository reservationValiderRepository = new ReservationValiderRepositoryFake();
 
 
         ConfirmerReservation confirmerReservation = new ConfirmerReservation(oeuvreRepository, paiementRepository, reservationValiderRepository);
