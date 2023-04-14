@@ -1,5 +1,7 @@
 package org.example.use_cases.reservation.sandwiche_case.domain;
 
+import java.util.Objects;
+
 public final class Film {
     private final String titre;
     private final String realisateur;
@@ -21,5 +23,18 @@ public final class Film {
 
     public Integer getDuree() {
         return duree;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Film film = (Film) o;
+        return titre.equals(film.titre) && realisateur.equals(film.realisateur) && duree.equals(film.duree);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titre, realisateur, duree);
     }
 }

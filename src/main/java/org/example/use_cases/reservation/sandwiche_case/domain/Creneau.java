@@ -4,6 +4,7 @@ import org.example.use_cases.reservation.sandwiche_case.exception.CreneauReserva
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.Objects;
 
 public class Creneau {
     private final Date debut;
@@ -43,5 +44,18 @@ public class Creneau {
         if (fin.after(Date.from(Instant.now()))) {
             throw new CreneauReservationException("La date de fin doit être après la date actuelle");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Creneau creneau = (Creneau) o;
+        return debut.equals(creneau.debut) && fin.equals(creneau.fin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(debut, fin);
     }
 }

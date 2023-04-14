@@ -1,5 +1,7 @@
 package org.example.use_cases.reservation.sandwiche_case.domain;
 
+import java.util.Objects;
+
 public final class Livre {
 
     private final String titre;
@@ -22,5 +24,18 @@ public final class Livre {
 
     public String getEditeur() {
         return editeur;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Livre livre = (Livre) o;
+        return titre.equals(livre.titre) && auteur.equals(livre.auteur) && editeur.equals(livre.editeur);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titre, auteur, editeur);
     }
 }
