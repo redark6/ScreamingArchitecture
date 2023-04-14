@@ -1,23 +1,37 @@
 package org.example.use_cases.reservation;
 
-import org.example.use_cases.reservation.sandwiche_case.Id;
-import org.example.use_cases.reservation.sandwiche_case.Oeuvre;
-import org.example.use_cases.reservation.sandwiche_case.OeuvreRepository;
+import org.example.use_cases.reservation.sandwiche_case.*;
+import org.example.use_cases.reservation.sandwiche_case.domain.Livre;
+import org.example.use_cases.reservation.sandwiche_case.domain.ReservationFilm;
+import org.example.use_cases.reservation.sandwiche_case.domain.ReservationLivre;
+import org.example.use_cases.reservation.sandwiche_case.domain.ReservationOeuvre;
+import org.example.use_cases.reservation.sandwiche_case.id.OeuvreId;
 
 public class OeuvreRepositoryIndisponible implements OeuvreRepository {
     @Override
-    public Oeuvre getOeuvrParId(Id oeuvreId) {
-        return new Oeuvre(
-                new Id("1"),
+    public ReservationOeuvre getOeuvreParId(OeuvreId oeuvreId) {
+        return new ReservationLivre(
+                oeuvreId,
+                new Livre(
                 "La Joconde",
                 "Leonard de Vinci",
-                "France",
+                "mappa"),
                 false
         );
     }
 
     @Override
-    public void setOeuvreNonDisponible(Id oeuvreId) {
+    public ReservationLivre getReservationLivreParId(OeuvreId oeuvreId) {
+        return null;
+    }
+
+    @Override
+    public ReservationFilm getReservationFilmParId(OeuvreId oeuvreId) {
+        return null;
+    }
+
+    @Override
+    public void setOeuvreNonDisponible(OeuvreId oeuvreId) {
         System.out.println("Oeuvre plus disponible");
     }
 }

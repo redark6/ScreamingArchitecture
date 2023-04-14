@@ -1,6 +1,14 @@
 package org.example.use_cases.reservation;
 
 import org.example.use_cases.reservation.sandwiche_case.*;
+import org.example.use_cases.reservation.sandwiche_case.domain.AwaitingReservation;
+import org.example.use_cases.reservation.sandwiche_case.domain.Creneau;
+import org.example.use_cases.reservation.sandwiche_case.domain.Prix;
+import org.example.use_cases.reservation.sandwiche_case.exception.OeuvreNonDisponibleException;
+import org.example.use_cases.reservation.sandwiche_case.exception.PaiementNonValideException;
+import org.example.use_cases.reservation.sandwiche_case.id.AwaitingReservationId;
+import org.example.use_cases.reservation.sandwiche_case.id.OeuvreId;
+import org.example.use_cases.reservation.sandwiche_case.id.UtilisateurId;
 
 import java.time.Instant;
 import java.util.Date;
@@ -19,13 +27,13 @@ class ConfirmerReservationTest {
 
         ConfirmerReservation confirmerReservation = new ConfirmerReservation(oeuvreRepository, paiementRepository, reservationValiderRepository);
         // When
-        confirmerReservation.confirmerReservation(new AwaitingReservation(new Id("1"), new Id("1"), new Id("1"), creneau));
+        confirmerReservation.confirmerReservation(new AwaitingReservation(new AwaitingReservationId("1"), new UtilisateurId("1"), new OeuvreId("1"), creneau, new Prix(50, "EUR")));
         // Then
         assertTrue(true);
     }
 
     @org.junit.jupiter.api.Test
-    void confirmerReservationOeuvreNonDisponible() throws OeuvreNonDisponibleException, PaiementNonValideException {
+    void confirmerReservationOeuvreNonDisponible() {
 // Given
         OeuvreRepository oeuvreRepository = new OeuvreRepositoryIndisponible();
         PaiementRepository paiementRepository = new PaiementRepositoryValid();
@@ -34,7 +42,7 @@ class ConfirmerReservationTest {
 
         ConfirmerReservation confirmerReservation = new ConfirmerReservation(oeuvreRepository, paiementRepository, reservationValiderRepository);
         // When
-        assertThrows(OeuvreNonDisponibleException.class, () -> confirmerReservation.confirmerReservation(new AwaitingReservation(new Id("2"), new Id("2"), new Id("2"), creneau)));
+        assertThrows(OeuvreNonDisponibleException.class, () -> confirmerReservation.confirmerReservation(new AwaitingReservation(new AwaitingReservationId("2"), new UtilisateurId("2"), new OeuvreId("2"), creneau, new Prix(50, "EUR"))));
         // Then
         assertTrue(true);
     }
@@ -50,7 +58,7 @@ class ConfirmerReservationTest {
 
         ConfirmerReservation confirmerReservation = new ConfirmerReservation(oeuvreRepository, paiementRepository, reservationValiderRepository);
         // When
-        assertThrows(PaiementNonValideException.class, () -> confirmerReservation.confirmerReservation(new AwaitingReservation(new Id("2"), new Id("1"), new Id("1"), creneau)));
+        assertThrows(PaiementNonValideException.class, () -> confirmerReservation.confirmerReservation(new AwaitingReservation(new AwaitingReservationId("2"), new UtilisateurId("1"), new OeuvreId("1"), creneau, new Prix(10, "EUR"))));
         // Then
         assertTrue(true);
     }

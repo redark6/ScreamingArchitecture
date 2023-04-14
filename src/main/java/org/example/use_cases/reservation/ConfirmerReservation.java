@@ -1,6 +1,11 @@
 package org.example.use_cases.reservation;
 
 import org.example.use_cases.reservation.sandwiche_case.*;
+import org.example.use_cases.reservation.sandwiche_case.domain.*;
+import org.example.use_cases.reservation.sandwiche_case.exception.OeuvreNonDisponibleException;
+import org.example.use_cases.reservation.sandwiche_case.exception.PaiementNonValideException;
+import org.example.use_cases.reservation.sandwiche_case.id.OeuvreId;
+import org.example.use_cases.reservation.sandwiche_case.id.UtilisateurId;
 
 public class ConfirmerReservation {
 
@@ -15,12 +20,11 @@ public class ConfirmerReservation {
     }
 
     public ReservationValider confirmerReservation(AwaitingReservation reservation) throws OeuvreNonDisponibleException, PaiementNonValideException {
-        Id oeuvreId = reservation.getOeuvreId();
-        Id utilisateurId = reservation.getUtilisateurId();
-        Oeuvre oeuvre = oeuvreRepository.getOeuvrParId(oeuvreId);
-        Paiement paiement = paiementRepository.getPaiement(utilisateurId, reservation.getId());
-
-        ReservationValider reservationValider = reservation.getReservationValider(oeuvreId, utilisateurId, oeuvre, paiement);
+        OeuvreId oeuvreId = reservation.getOeuvreId();
+        UtilisateurId utilisateurId = reservation.getUtilisateurId();
+        ReservationOeuvre oeuvre = oeuvreRepository.getOeuvreParId(oeuvreId);
+        Prix priceUser = new Prix(50,"EUR");
+        ReservationValider reservationValider = reservation.validerReservation(oeuvre, utilisateurId, priceUser);
 
         reservationValiderRepository.save(reservationValider);
         oeuvreRepository.setOeuvreNonDisponible(oeuvreId);
