@@ -4,6 +4,7 @@ import org.example.use_cases.reservation.sandwiche_case.*;
 import org.example.use_cases.reservation.sandwiche_case.domain.AwaitingReservation;
 import org.example.use_cases.reservation.sandwiche_case.domain.Creneau;
 import org.example.use_cases.reservation.sandwiche_case.domain.Prix;
+import org.example.use_cases.reservation.sandwiche_case.exception.CreneauReservationException;
 import org.example.use_cases.reservation.sandwiche_case.exception.OeuvreNonDisponibleException;
 import org.example.use_cases.reservation.sandwiche_case.exception.PaiementNonValideException;
 import org.example.use_cases.reservation.sandwiche_case.id.AwaitingReservationId;
@@ -23,7 +24,7 @@ class ConfirmerReservationTest {
         OeuvreRepository oeuvreRepository = new OeuvreRepositoryDisponible();
         PaiementRepository paiementRepository = new PaiementRepositoryValid();
         ReservationValiderRepository reservationValiderRepository = new ReservationValiderRepositoryFake();
-        Creneau creneau = new Creneau(Date.from(Instant.parse("2018-11-30T18:35:24.00Z")), Date.from(Instant.parse("2018-11-30T19:35:24.00Z")));
+        Creneau creneau = new Creneau(Date.from(Instant.parse("2023-11-30T18:35:24.00Z")), Date.from(Instant.parse("2023-11-30T19:35:24.00Z")));
 
         ConfirmerReservation confirmerReservation = new ConfirmerReservation(oeuvreRepository, paiementRepository, reservationValiderRepository);
         // When
@@ -38,7 +39,7 @@ class ConfirmerReservationTest {
         OeuvreRepository oeuvreRepository = new OeuvreRepositoryIndisponible();
         PaiementRepository paiementRepository = new PaiementRepositoryValid();
         ReservationValiderRepository reservationValiderRepository = new ReservationValiderRepositoryFake();
-        Creneau creneau = new Creneau(Date.from(Instant.parse("2018-11-30T18:35:24.00Z")), Date.from(Instant.parse("2018-11-30T19:35:24.00Z")));
+        Creneau creneau = new Creneau(Date.from(Instant.parse("2023-11-30T18:35:24.00Z")), Date.from(Instant.parse("2023-11-30T19:35:24.00Z")));
 
         ConfirmerReservation confirmerReservation = new ConfirmerReservation(oeuvreRepository, paiementRepository, reservationValiderRepository);
         // When
@@ -53,7 +54,7 @@ class ConfirmerReservationTest {
         OeuvreRepository oeuvreRepository = new OeuvreRepositoryDisponible();
         PaiementRepository paiementRepository = new PaiementRepositoryInvalid();
         ReservationValiderRepository reservationValiderRepository = new ReservationValiderRepositoryFake();
-        Creneau creneau = new Creneau(Date.from(Instant.parse("2018-11-30T18:35:24.00Z")), Date.from(Instant.parse("2018-11-30T19:35:24.00Z")));
+        Creneau creneau = new Creneau(Date.from(Instant.parse("2023-11-30T18:35:24.00Z")), Date.from(Instant.parse("2023-11-30T19:35:24.00Z")));
 
 
         ConfirmerReservation confirmerReservation = new ConfirmerReservation(oeuvreRepository, paiementRepository, reservationValiderRepository);
@@ -62,4 +63,21 @@ class ConfirmerReservationTest {
         // Then
         assertTrue(true);
     }
+
+    @org.junit.jupiter.api.Test
+    void CreneauNonDisponible() {
+        // When
+        assertThrows(CreneauReservationException.class, () -> new Creneau(Date.from(Instant.parse("2023-11-30T18:35:24.00Z")), Date.from(Instant.parse("2017-11-30T19:35:24.00Z"))));
+        // Then
+        assertTrue(true);
+    }
+
+    @org.junit.jupiter.api.Test
+    void CreneauDisponible() {
+        // When
+        Creneau crenau = new Creneau(Date.from(Instant.parse("2023-11-30T18:35:24.00Z")), Date.from(Instant.parse("2023-11-30T19:35:24.00Z")));
+        // Then
+        assertTrue(true);
+    }
+
 }

@@ -33,7 +33,7 @@ public class Creneau {
             throw new CreneauReservationException("La date de début doit être avant la date de fin");
         }
 
-        if(debut.after(Date.from(Instant.now()))) {
+        if(!debut.after(Date.from(Instant.now()))) {
             throw new CreneauReservationException("La date de début doit être après la date actuelle");
         }
 
@@ -41,7 +41,7 @@ public class Creneau {
             throw new CreneauReservationException("La date de début doit être différente de la date de fin");
         }
 
-        if (fin.after(Date.from(Instant.now()))) {
+        if (fin.before(Date.from(Instant.now()))) {
             throw new CreneauReservationException("La date de fin doit être après la date actuelle");
         }
     }
